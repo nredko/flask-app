@@ -5,3 +5,4 @@ flup==1.0.2
 itsdangerous==0.23
 passlib==1.6.2
 pytz==2013.9
+feedparser

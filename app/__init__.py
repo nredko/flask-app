@@ -1,4 +1,3 @@
-#!../env/bin/python
 from datetime import timedelta
 import md5
 
