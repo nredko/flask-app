@@ -1,4 +1,4 @@
-#!../venv/bin/python
+#!../env/bin/python
 from datetime import timedelta
 import md5
 
@@ -71,3 +71,4 @@ login_manager.login_view = "/login/"
 login_manager.init_app(app)
 
 import views
+
