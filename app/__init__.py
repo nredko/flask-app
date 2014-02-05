@@ -6,9 +6,12 @@ from flask_login import (LoginManager, login_required, login_user,
                          current_user, logout_user, UserMixin)
 from itsdangerous import URLSafeTimedSerializer
 from functools import wraps
+from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.debug = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db = SQLAlchemy(app)
 
 app.secret_key = "#$%&^*(*(((()&*()*()___*($%@#@#$%#!@vl;8op3945tc  5p4"
 login_serializer = URLSafeTimedSerializer(app.secret_key)
