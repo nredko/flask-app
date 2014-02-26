@@ -15,7 +15,7 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-class Config(db.model):
+class Config(db.Model):
     param = db.Column(db.String(20), primary_key=True)
     value = db.Column(db.String(120))
 
@@ -62,7 +62,7 @@ class Book(db.Model):
         self.name = name
 
     def __repr__(self):
-        return '<Author %r>' % self.name
+        return '<Book %d: %r>' % (self.id, self.name)
 
 
 class Post(db.Model):
@@ -76,9 +76,10 @@ class Post(db.Model):
     # category = db.relationship('Category',
     #     backref=db.backref('posts', lazy='dynamic'))
 
-    def __init__(self, title, body, pub_date=None):
+    def __init__(self, title, body, user, pub_date=None):
         self.title = title
         self.body = body
+        self.user = user
         if pub_date is None:
             pub_date = datetime.utcnow()
         self.pub_date = pub_date

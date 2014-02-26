@@ -7,6 +7,6 @@
     <type id="django" />
   </component>
   <component name="IdProvider" IDEtalkID="4A802B40647361AADC5E7B86413383E4" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" assert-keyword="false" jdk-15="false" project-jdk-name="Python 2.7.6 virtualenv at D:\home\flask\env" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7.6 virtualenv at C:\home\flask\env" project-jdk-type="Python SDK" />
 </project>
 
