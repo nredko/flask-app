@@ -4,9 +4,10 @@ import feedparser
 import urllib2
 import re
 from BeautifulSoup import BeautifulSoup
-
+import datetime
+import time
 from app import model as m, db
-
+from sqlalchemy import exc
 
 def parse_book(url):
     book_id = url[url.rfind('/') + 1:]
@@ -41,7 +42,7 @@ def parse_book(url):
             db.session.commit()
         genres.append(genre)
 
-    print book_id + ': ' +book_title
+#    print book_id + ': ' +book_title
 
     book = m.Book(book_id, book_title, authors, genres)
     db.session.add(book)
@@ -51,11 +52,19 @@ def parse_book(url):
 
 db.create_all()
 etag_rec = m.Config.query.get('etag')
-etag = ''
+
 if etag_rec is not None:
-    etag = etag_rec['value']
+    etag = etag_rec.value
+    pass
+else:
+    etag = ''
+    etag_rec = m.Config('etag', '')
+    db.session.add(etag_rec)
 
 rss = feedparser.parse('http://flibusta.net/polka/show/all/rss', etag)
+etag_rec.value = rss['etag']
+db.session.commit()
+count = 0;
 if rss.status == 200:
     print rss.etag
     for entry in rss.entries:
@@ -63,6 +72,19 @@ if rss.status == 200:
         if m.Post.query.get(post_id) is None:
             # print entry.title
             book = parse_book(entry.link)
-            post = m.Post(post_id, entry.title, entry.summary, book, entry.published_parsed)
-            db.session.add(post)
-            db.session.commit()
+            body = entry.summary
+            r = re.compile(r' ... ')
+            pos = r.search(body)
+            user = body[:pos.regs[0][0]]
+            body[body.find('\n') + 1:]
+            post = m.Post(post_id, entry.title, entry.summary, book, datetime.datetime.fromtimestamp(time.mktime(entry.published_parsed)), user)
+            try:
+                db.session.add(post)
+                db.session.commit()
+                count += 1
+            except exc.SQLAlchemyError as ex:
+                db.session.rollback()
+                print ex
+        else:
+            pass
+print 'Added %d posts' % count

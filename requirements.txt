@@ -5,3 +5,4 @@ flup
 itsdangerous
 feedparser
 flask_sqlalchemy
+BeautifulSoup

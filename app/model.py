@@ -58,6 +58,7 @@ book_genres = db.Table('book_genres',
                 db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
 )
 
+
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
@@ -82,20 +83,20 @@ class Post(db.Model):
     body = db.Column(db.Text)
     pub_date = db.Column(db.DateTime)
     user = db.Column(db.String(50))
-    book = db.Column(db.Integer,db.ForeignKey('book.id'))
-    # category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    # category = db.relationship('Category',
-    #     backref=db.backref('posts', lazy='dynamic'))
+    book_id = db.Column(db.Integer,db.ForeignKey('book.id'))
+    book = db.relationship('Book', backref=db.backref('post', lazy='dynamic'))
 
-    def __init__(self, id, title, body, book, pub_date=None, user = ''):
+
+    def __init__(self, id, title, body, book, pub_date=None, user = None):
         self.id = id
         self.title = title
-        self.body = body
-        self.user = user
         self.book = book
         if pub_date is None:
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
+        self.body = body
+        self.user = user
+
 
     def __repr__(self):
         return '<Post %r>' % self.title
