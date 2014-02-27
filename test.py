@@ -5,32 +5,64 @@ import urllib2
 import re
 from BeautifulSoup import BeautifulSoup
 
-from app import model as m
-
-rss = feedparser.parse('http://flibusta.net/polka/show/all/rss', '" 1393317804"')
+from app import model as m, db
 
 
 def parse_book(url):
     book_id = url[url.rfind('/') + 1:]
+    book = m.Book.query.get(book_id)
+    if book is not None:
+        return book
     html = urllib2.urlopen(url).read()
     parsed_html = BeautifulSoup(html)
-    book_title = parsed_html.body.find('h1', attrs={'class':'title'}).text
-    book_title = book_title[:book_title.rfind(' ')]
-    author_a = parsed_html.body.find('a', attrs={'href':re.compile(r"/a/\d+")})
-    author_name = author_a.text
-    author_id = author_a.attrMap['href'][author_a.attrMap['href'].rfind('/')+1:]
-    book_title = book_title[:book_title.rfind(' ')]
+
+    book_title_a = parsed_html.body.find('h1', attrs={'class':'title'}).text
+    book_title = book_title_a[:book_title_a.rfind(' ')]
+
+    authors = []
+    authors_a = parsed_html.body.findAll('a', attrs={'href':re.compile(r"/a/\d+")})
+    for a in authors_a:
+        a_id = a['href'][a['href'].rfind('/')+1:]
+        author = m.Author.query.get(a_id)
+        if author is None:
+            author = m.Author(a_id, a.text)
+            db.session.add(author)
+            db.session.commit()
+        authors.append(author)
+
+    genres_a = parsed_html.body.findAll('a', attrs={'class':'genre', 'href':re.compile(r"/g/\d+")})
+    genres = []
+    for g in genres_a:
+        genre_id = g['href'][g['href'].rfind('/')+1:]
+        genre = m.Genre.query.get(genre_id)
+        if genre is None:
+            genre = m.Genre(genre_id, g['name'], g.text)
+            db.session.add(genre)
+            db.session.commit()
+        genres.append(genre)
+
     print book_id + ': ' +book_title
-    print '   '+author_id + ': ' + author_name
-    author = m.Author(author_id, author_name)
-    book = m.Book(id, title, author, genres)
+
+    book = m.Book(book_id, book_title, authors, genres)
+    db.session.add(book)
+    db.session.commit()
+    return book
 
 
+db.create_all()
+etag_rec = m.Config.query.get('etag')
+etag = ''
+if etag_rec is not None:
+    etag = etag_rec['value']
+
+rss = feedparser.parse('http://flibusta.net/polka/show/all/rss', etag)
 if rss.status == 200:
-    print rss.feed.title
     print rss.etag
     for entry in rss.entries:
-        # print entry.title
-        parse_book(entry.link)
-        # post = m.Post(entry.title, entry.summary, entry.published_parsed)
-
+        post_id = entry.id[entry.id.rfind('/')+1:]
+        if m.Post.query.get(post_id) is None:
+            # print entry.title
+            book = parse_book(entry.link)
+            post = m.Post(post_id, entry.title, entry.summary, book, entry.published_parsed)
+            db.session.add(post)
+            db.session.commit()

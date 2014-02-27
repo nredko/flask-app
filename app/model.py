@@ -19,6 +19,10 @@ class Config(db.Model):
     param = db.Column(db.String(20), primary_key=True)
     value = db.Column(db.String(120))
 
+    def __init__(self, param, value):
+        self.param = param
+        self.value = value
+
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
@@ -34,30 +38,37 @@ class Author(db.Model):
 class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
+    title = db.Column(db.String(80))
 
-    def __init__(self, id, name):
+    def __init__(self, id, name, title):
         self.id = id
         self.name = name
+        self.title = title
 
     def __repr__(self):
         return '<Genre %d: %r>' % (self.id, self.name)
 
-genres = db.Table('genres',
+book_authors = db.Table('book_authors',
+                db.Column('book_id', db.Integer, db.ForeignKey('author.id')),
+                db.Column('author_id', db.Integer, db.ForeignKey('book.id'))
+)
+
+book_genres = db.Table('book_genres',
                 db.Column('genre_id', db.Integer, db.ForeignKey('genre.id')),
                 db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
 )
 
-
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
-    author = db.Column(db.Integer, db.ForeignKey('author.id'))
-    genres = db.relationship('Genre', secondary=genres,
+    authors = db.relationship('Author', secondary=book_authors,
+                       backref=db.backref('authors', lazy='dynamic'))
+    genres = db.relationship('Genre', secondary=book_genres,
                        backref=db.backref('genres', lazy='dynamic'))
 
-    def __init__(self, id, name, author, genres):
+    def __init__(self, id, name, authors, genres):
         self.id = id
-        self.author = author
+        self.authors = authors
         self.genres = genres
         self.name = name
 
@@ -66,7 +77,7 @@ class Book(db.Model):
 
 
 class Post(db.Model):
-    id = db.Column(db.String(50), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
     body = db.Column(db.Text)
     pub_date = db.Column(db.DateTime)
@@ -76,10 +87,12 @@ class Post(db.Model):
     # category = db.relationship('Category',
     #     backref=db.backref('posts', lazy='dynamic'))
 
-    def __init__(self, title, body, user, pub_date=None):
+    def __init__(self, id, title, body, book, pub_date=None, user = ''):
+        self.id = id
         self.title = title
         self.body = body
         self.user = user
+        self.book = book
         if pub_date is None:
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
