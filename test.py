@@ -67,7 +67,7 @@ def load():
         db.session.commit()
         count = 0;
         if rss.status == 200:
-            print rss.etag
+            print '%r - %r' % (datetime.now().strftime('%x %X'), rss.etag)
             for entry in rss.entries:
                 post_id = entry.id[entry.id.rfind('/')+1:]
                 if m.Post.query.get(post_id) is None:
@@ -95,6 +95,6 @@ def load():
 
 db.create_all()
 while True:
-    print datetime.now()
+    print
     load()
     time.sleep(30)
