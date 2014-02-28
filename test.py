@@ -52,7 +52,6 @@ def parse_book(url):
     return book
 
 def load():
-    db.create_all()
     etag_rec = m.Config.query.get('etag')
 
     if etag_rec is not None:
@@ -62,35 +61,39 @@ def load():
         etag = ''
         etag_rec = m.Config('etag', '')
         db.session.add(etag_rec)
-
-    rss = feedparser.parse('http://flibusta.net/polka/show/all/rss', etag)
-    etag_rec.value = rss['etag']
-    db.session.commit()
-    count = 0;
-    if rss.status == 200:
-        print rss.etag
-        for entry in rss.entries:
-            post_id = entry.id[entry.id.rfind('/')+1:]
-            if m.Post.query.get(post_id) is None:
-                # print entry.title
-                book = parse_book(entry.link)
-                body = entry.summary
-                r = re.compile(r' ... ')
-                pos = r.search(body)
-                user = body[:pos.regs[0][0]]
-                body[body.find('\n') + 1:]
-                post = m.Post(post_id, entry.title, entry.summary, book, datetime.datetime.fromtimestamp(time.mktime(entry.published_parsed)), user)
-                try:
-                    db.session.add(post)
-                    db.session.commit()
-                    count += 1
-                except exc.SQLAlchemyError as ex:
-                    db.session.rollback()
-                    print ex
-            else:
-                pass
-    print 'Added %d posts' % count
+    try:
+        rss = feedparser.parse('http://flibusta.net/polka/show/all/rss', etag)
+        etag_rec.value = rss.etag
+        db.session.commit()
+        count = 0;
+        if rss.status == 200:
+            print rss.etag
+            for entry in rss.entries:
+                post_id = entry.id[entry.id.rfind('/')+1:]
+                if m.Post.query.get(post_id) is None:
+                    # print entry.title
+                    book = parse_book(entry.link)
+                    body = entry.summary
+                    r = re.compile(r' ... ')
+                    pos = r.search(body)
+                    user = body[:pos.regs[0][0]]
+                    body[body.find('\n') + 1:]
+                    post = m.Post(post_id, entry.title, entry.summary, book, datetime.datetime.fromtimestamp(time.mktime(entry.published_parsed)), user)
+                    try:
+                        db.session.add(post)
+                        db.session.commit()
+                        count += 1
+                    except exc.SQLAlchemyError as ex:
+                        db.session.rollback()
+                        print ex
+                else:
+                    pass
+        print 'Added %d posts' % count
+    except Exception as e:
+        print e
+        pass
 
 while True:
+    db.create_all()
     load()
     time.sleep(30)

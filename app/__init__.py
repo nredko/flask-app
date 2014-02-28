@@ -7,6 +7,8 @@ from flask_login import (LoginManager, login_required, login_user,
 from itsdangerous import URLSafeTimedSerializer
 from functools import wraps
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.admin import Admin
+from flask.ext.admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
 app.debug = True
