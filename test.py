@@ -4,7 +4,7 @@ import feedparser
 import urllib2
 import re
 from BeautifulSoup import BeautifulSoup
-import datetime
+from datetime import datetime
 import time
 from app import model as m, db
 from sqlalchemy import exc
@@ -78,7 +78,7 @@ def load():
                     pos = r.search(body)
                     user = body[:pos.regs[0][0]]
                     body[body.find('\n') + 1:]
-                    post = m.Post(post_id, entry.title, entry.summary, book, datetime.datetime.fromtimestamp(time.mktime(entry.published_parsed)), user)
+                    post = m.Post(post_id, entry.title, entry.summary, book, datetime.fromtimestamp(time.mktime(entry.published_parsed)), user)
                     try:
                         db.session.add(post)
                         db.session.commit()
@@ -88,12 +88,13 @@ def load():
                         print ex
                 else:
                     pass
-        print 'Added %d posts' % count
+            print 'Added %d posts' % count
     except Exception as e:
         print e
         pass
 
+db.create_all()
 while True:
-    db.create_all()
+    print datetime.now()
     load()
     time.sleep(30)
