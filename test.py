@@ -8,7 +8,7 @@ from datetime import datetime
 import time
 from app import model as m, db
 from sqlalchemy import exc
-from sqlalchemy.sql.expression import true
+# from sqlalchemy.sql.expression import true
 
 
 def parse_book(url):
@@ -18,31 +18,39 @@ def parse_book(url):
         return book
     html = urllib2.urlopen(url).read()
     parsed_html = BeautifulSoup(html)
+    content = parsed_html.body.find('div', attrs={'id':'main'})
 
-    book_title_a = parsed_html.body.find('h1', attrs={'class':'title'}).text
+    book_title_a = content.find('h1', attrs={'class':'title'}).text
     book_title = book_title_a[:book_title_a.rfind(' ')]
 
     authors = []
-    authors_a = parsed_html.body.findAll('a', attrs={'href':re.compile(r"/a/\d+")})
+    authors_added = set([])
+
+    authors_a = content.findAll('a', attrs={'href':re.compile(r"/a/\d+")})
     for a in authors_a:
         a_id = a['href'][a['href'].rfind('/')+1:]
-        author = m.Author.query.get(a_id)
-        if author is None:
-            author = m.Author(a_id, a.text)
-            db.session.add(author)
-            db.session.commit()
-        authors.append(author)
+        if a_id not in authors_added:
+            author = m.Author.query.get(a_id)
+            if author is None:
+                author = m.Author(a_id, a.text)
+                db.session.add(author)
+                db.session.commit()
+            authors.append(author)
+            authors_added.add(a_id)
 
-    genres_a = parsed_html.body.findAll('a', attrs={'class':'genre', 'href':re.compile(r"/g/\d+")})
+    genres_a = content.findAll('a', attrs={'class':'genre', 'href':re.compile(r"/g/\d+")})
     genres = []
+    genres_added = set([])
     for g in genres_a:
         genre_id = g['href'][g['href'].rfind('/')+1:]
-        genre = m.Genre.query.get(genre_id)
-        if genre is None:
-            genre = m.Genre(genre_id, g['name'], g.text)
-            db.session.add(genre)
-            db.session.commit()
-        genres.append(genre)
+        if genre_id not in genres_added:
+            genre = m.Genre.query.get(genre_id)
+            if genre is None:
+                genre = m.Genre(genre_id, g['name'], g.text)
+                db.session.add(genre)
+                db.session.commit()
+            genres.append(genre)
+            genres_added.add(genre_id)
 
 #    print book_id + ': ' +book_title
 
@@ -71,7 +79,6 @@ def load():
             for entry in rss.entries:
                 post_id = entry.id[entry.id.rfind('/')+1:]
                 if m.Post.query.get(post_id) is None:
-                    # print entry.title
                     book = parse_book(entry.link)
                     body = entry.summary
                     r = re.compile(r' ... ')

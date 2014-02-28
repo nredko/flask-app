@@ -49,8 +49,8 @@ class Genre(db.Model):
         return '<Genre %d: %r>' % (self.id, self.name)
 
 book_authors = db.Table('book_authors',
-                db.Column('book_id', db.Integer, db.ForeignKey('author.id')),
-                db.Column('author_id', db.Integer, db.ForeignKey('book.id'))
+                db.Column('book_id', db.Integer, db.ForeignKey('book.id')),
+                db.Column('author_id', db.Integer, db.ForeignKey('author.id'))
 )
 
 book_genres = db.Table('book_genres',
