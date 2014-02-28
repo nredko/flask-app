@@ -95,5 +95,6 @@ def load():
 
 db.create_all()
 while True:
+#
     load()
     time.sleep(30)
