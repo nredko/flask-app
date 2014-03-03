@@ -85,7 +85,7 @@ def load():
                     pos = r.search(body)
                     user = body[:pos.regs[0][0]]
                     body[body.find('\n') + 1:]
-                    post = m.Post(post_id, entry.title, entry.summary, book, datetime.fromtimestamp(time.mktime(entry.published_parsed)), user)
+                    post = m.Post(post_id, entry.title, entry.summary.replace('\n', '<br />'), book, datetime.fromtimestamp(time.mktime(entry.published_parsed)), user)
                     try:
                         db.session.add(post)
                         db.session.commit()
