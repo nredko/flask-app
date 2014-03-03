@@ -27,11 +27,13 @@ class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime.datetime):
             return obj.isoformat()
-
         try:
             return obj.tojson()
         except AttributeError:
-            return json.JSONEncoder.default(self, obj)
+            try:
+                return json.JSONEncoder.default(self, obj)
+            except TypeError as err:
+                return json.JSONEncoder.default(self, err)
 
 def jsonify(*args, **kwargs):
     """

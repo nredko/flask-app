@@ -12,6 +12,7 @@ class Base(object):
     """
     Add some default properties and methods to the SQLAlchemy declarative base.
     """
+    __exclude__ = ()
 
     @property
     def columns(self):
@@ -19,7 +20,17 @@ class Base(object):
 
     @property
     def columnitems(self):
-        return dict([ (c, getattr(self, c)) for c in self.columns ])
+        dic = {}
+        keys = self._sa_instance_state.attrs.items()
+        for k, field in keys:
+            if k in self.__exclude__:
+                continue
+            dic[k] = getattr(self, k)
+        return dic
+
+    # @property
+    # def columnitems(self):
+    #     return dict([ (c, getattr(self, c)) for c in self.columns ])
 
     def __repr__(self):
         return '{}({})'.format(self.__class__.__name__, self.columnitems)
@@ -84,6 +95,8 @@ book_genres = db.Table('book_genres',
 
 
 class Book(db.Model, Base):
+    __exclude__ = ('post')
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
     authors = db.relationship('Author', secondary=book_authors,

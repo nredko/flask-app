@@ -32,7 +32,15 @@ def restricted():
     return dict(user_id=user_id)
 
 @app.route("/posts/")
+@app.route("/post/<int:post_id>")
 #@login_required
-def posts():
+def post(post_id=0):
+    if post_id != 0:
+        return jsonify(post=m.Post.query.get(post_id))
     posts = m.Post.query.order_by(m.Post.pub_date.desc()).all()
     return jsonify(posts=posts)
+
+@app.route("/book/<int:book_id>")
+#@login_required
+def book(book_id):
+    return jsonify(book=m.Book.query.get(book_id))
