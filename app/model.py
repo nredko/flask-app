@@ -1,9 +1,33 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 from datetime import datetime
 from app import db
+import json
+from sqlalchemy.ext.declarative import declarative_base as real_declarative_base
 
+# Let's make this a class decorator
+declarative_base = lambda cls: real_declarative_base(cls=cls)
 
-class User(db.Model):
+@declarative_base
+class Base(object):
+    """
+    Add some default properties and methods to the SQLAlchemy declarative base.
+    """
+
+    @property
+    def columns(self):
+        return [ c.name for c in self.__table__.columns ]
+
+    @property
+    def columnitems(self):
+        return dict([ (c, getattr(self, c)) for c in self.columns ])
+
+    def __repr__(self):
+        return '{}({})'.format(self.__class__.__name__, self.columnitems)
+
+    def tojson(self):
+        return self.columnitems
+
+class User(db.Model, Base):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
@@ -15,7 +39,7 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-class Config(db.Model):
+class Config(db.Model, Base):
     param = db.Column(db.String(20), primary_key=True)
     value = db.Column(db.String(120))
 
@@ -23,7 +47,7 @@ class Config(db.Model):
         self.param = param
         self.value = value
 
-class Author(db.Model):
+class Author(db.Model, Base):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
 
@@ -35,7 +59,7 @@ class Author(db.Model):
         return '<Author %d: %r>' % (self.id, self.name)
 
 
-class Genre(db.Model):
+class Genre(db.Model, Base):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
     title = db.Column(db.String(80))
@@ -59,7 +83,7 @@ book_genres = db.Table('book_genres',
 )
 
 
-class Book(db.Model):
+class Book(db.Model, Base):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
     authors = db.relationship('Author', secondary=book_authors,
@@ -77,7 +101,7 @@ class Book(db.Model):
         return '<Book %d: %r>' % (self.id, self.name)
 
 
-class Post(db.Model):
+class Post(db.Model, Base):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
     body = db.Column(db.Text)

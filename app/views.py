@@ -1,6 +1,7 @@
 from flask import render_template, redirect, flash
 from flask_login import login_required, login_user, current_user, logout_user
 from app import *
+import model as m
 
 @app.route("/logout/")
 def logout_page():
@@ -29,3 +30,9 @@ def index():
 def restricted():
     user_id = (current_user.get_id() or "No User Logged In")
     return dict(user_id=user_id)
+
+@app.route("/posts/")
+#@login_required
+def posts():
+    posts = m.Post.query.order_by(m.Post.pub_date.desc()).all()
+    return jsonify(posts=posts)

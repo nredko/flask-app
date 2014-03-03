@@ -7,6 +7,7 @@ from flask_login import (LoginManager, login_required, login_user,
 from itsdangerous import URLSafeTimedSerializer
 from functools import wraps
 from flask.ext.sqlalchemy import SQLAlchemy
+import json, datetime
 
 app = Flask(__name__)
 app.debug = True
@@ -16,6 +17,30 @@ db = SQLAlchemy(app)
 app.secret_key = "#$%&^*(*(((()&*()*()___*($%@#@#$%#!@vl;8op3945tc  5p4"
 login_serializer = URLSafeTimedSerializer(app.secret_key)
 login_manager = LoginManager()
+
+class JSONEncoder(json.JSONEncoder):
+    """
+    Wrapper class to try calling an object's tojson() method. This allows
+    us to JSONify objects coming from the ORM. Also handles dates and datetimes.
+    """
+
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+
+        try:
+            return obj.tojson()
+        except AttributeError:
+            return json.JSONEncoder.default(self, obj)
+
+def jsonify(*args, **kwargs):
+    """
+    Workaround for Flask's jsonify not allowing replacement of the JSONEncoder
+    in my version of Flask.
+    """
+    return app.response_class(json.dumps(dict(*args, **kwargs),
+                                         cls=JSONEncoder),
+                              mimetype='application/json')
 
 class User(UserMixin):
     def __init__(self, userid, password):
