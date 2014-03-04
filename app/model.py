@@ -59,6 +59,7 @@ class Config(db.Model, Base):
         self.value = value
 
 class Author(db.Model, Base):
+    __exclude__ = ('authors')
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
 
@@ -71,6 +72,7 @@ class Author(db.Model, Base):
 
 
 class Genre(db.Model, Base):
+    __exclude__ = ('genres')
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
     title = db.Column(db.String(80))
