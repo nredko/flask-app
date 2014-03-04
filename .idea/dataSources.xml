@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="108223237">
+    <data-source source="LOCAL" name="SQLite - test.db" uuid="15c15f05-a68b-4045-82de-8fbe33282bf5">
+      <driver-ref>sqlite.zentus</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/app/test.db</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
