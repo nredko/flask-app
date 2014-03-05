@@ -71,11 +71,10 @@ def load():
         db.session.add(etag_rec)
     try:
         rss = feedparser.parse('http://flibusta.net/polka/show/all/rss', etag)
-        etag_rec.value = rss.etag
-        db.session.commit()
-        count = 0;
+        etag = rss.etag
+        count = 0
         if rss.status == 200:
-            print datetime.now().strftime('%x %X') + ' ' + rss.etag
+            print datetime.now().strftime('%x %X') + ' ' + rss.etag + ': ',
             for entry in rss.entries:
                 post_id = entry.id[entry.id.rfind('/')+1:]
                 if m.Post.query.get(post_id) is None:
@@ -95,7 +94,9 @@ def load():
                         print ex
                 else:
                     pass
-            print 'Added %d posts' % count
+            print count
+            etag_rec.value = etag
+            db.session.commit()
     except Exception as e:
         print e
         pass
