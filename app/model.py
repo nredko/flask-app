@@ -4,6 +4,7 @@ from datetime import datetime
 from app import db
 import json
 from sqlalchemy.ext.declarative import declarative_base as real_declarative_base
+from sqlalchemy.sql import text
 
 # Let's make this a class decorator
 declarative_base = lambda cls: real_declarative_base(cls=cls)
@@ -143,12 +144,16 @@ class Post(db.Model, Base):
         return '<Post %r>' % self.title
 
 class List():
-    sql = (
-        u'select count(post.id) count, b.*, c.dt date, Group_Concat(\'<div>\'||post.body||\'</div>\',\'<hr>\') body from (select book.*, authors from '
-        u'book left join (select book_id, Group_Concat(SUBSTR(\' \'||name,1+length(rtrim(\' \'||name, '
-        u'\'ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю'
-        u'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm`1234567890-=~!@#$%^&*()_+|",./<>?\'))) '
-        u') authors from book_authors join author on author_id = author.id group by book_id) a on book.id = a.book_id '
-        u') b join (select book_id, max(pub_date) as dt from post group by book_id) c on  b.id = c.book_id join post on '
-        u'post.book_id = b.id group by b.id order by c.dt desc'
-    )
+    @classmethod
+    def query(cls):
+        result = db.session.execute((
+            u'select count(post.id) count, b.*, c.dt date, Group_Concat(\'<div>\'||post.body||\'</div>\',\'<hr>\') body from (select book.*, authors from '
+            u'book left join (select book_id, Group_Concat(SUBSTR(\' \'||name,1+length(rtrim(\' \'||name, '
+            u'\'ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮёйцукенгшщзхъфывапролджэячсмитьбю'
+            u'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm`1234567890-=~!@#$%^&*()_+|",./<>?\'))) '
+            u') authors from book_authors join author on author_id = author.id group by book_id) a on book.id = a.book_id '
+            u') b join (select book_id, max(pub_date) as dt from post group by book_id) c on  b.id = c.book_id join post on '
+            u'post.book_id = b.id group by b.id order by c.dt desc'
+        ))
+        ret = [dict(x) for x in result]
+        return ret

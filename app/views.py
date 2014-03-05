@@ -44,3 +44,8 @@ def post(post_id=0):
 #@login_required
 def book(book_id):
     return jsonify(book=m.Book.query.get(book_id))
+
+@app.route("/list/")
+#@login_required
+def list():
+    return jsonify(list=m.List.query())
