@@ -48,4 +48,4 @@ def book(book_id):
 @app.route("/list/")
 #@login_required
 def list():
-    return jsonify(list=m.List.query())
+    return jsonify(rows=m.List.query())
