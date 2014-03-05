@@ -71,9 +71,9 @@ def load():
         db.session.add(etag_rec)
     try:
         rss = feedparser.parse('http://flibusta.net/polka/show/all/rss', etag)
-        etag = rss.etag
         count = 0
         if rss.status == 200:
+            etag = rss.etag
             print datetime.now().strftime('%x %X') + ' ' + rss.etag + ': ',
             for entry in rss.entries:
                 post_id = entry.id[entry.id.rfind('/')+1:]
