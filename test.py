@@ -1,7 +1,10 @@
 #!env/bin/python
-
+# -*- coding: utf-8 -*-
 import feedparser
 import urllib2
+import cookielib
+import urllib
+
 import re
 from BeautifulSoup import BeautifulSoup
 from datetime import datetime
@@ -101,16 +104,51 @@ def load():
         print e
         pass
 
+def login():
+    # Store the cookies and create an opener that will hold them
+    cj = cookielib.CookieJar()
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+
+    # Add our headers
+    #opener.addheaders = [('User-agent', 'RedditTesting')]
+
+    # Install our opener (note that this changes the global opener to the one
+    # we just made, but you can also just call opener.open() if you want)
+    urllib2.install_opener(opener)
+
+    # The action/ target from the form
+    authentication_url = 'http://flibusta.net/node?destination=node'
+
+    # Input parameters we are going to send
+    payload = {
+      'name': 'Nike000',
+      'pass': '715434',
+      'persistent_login': '1',
+      'form_id': 'user_login_block'
+      }
+
+    # Use urllib to encode the payload
+    data = urllib.urlencode(payload)
+
+    # Build our Request object (supplying 'data' makes it a POST)
+    req = urllib2.Request(authentication_url, data)
+
+    # Make the request and read the response
+    resp = urllib2.urlopen(req)
+    contents = resp.read()
+
 def test():
-    html = urllib2.urlopen('http://flibusta.net/b/356183').read()
+    login()
+    auth_url = 'http://flibusta.net/node?destination=node'
+    url= 'http://flibusta.net/b/356183'
+
+
+    html = urllib2.urlopen(url).read()
     parsed_html = BeautifulSoup(html)
     content = parsed_html.body.find('div', attrs={'id':'main'})
 
     book_title_a = content.find('h1', attrs={'class':'title'}).text
     book_title = book_title_a[:book_title_a.rfind(' ')]
-    print book_title
-
-db.create_all()
-while True:
-    load()
-    time.sleep(30)
+#    if book_title == 'Книг':
+#        pass
+test()
