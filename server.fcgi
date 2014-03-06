@@ -1,4 +1,4 @@
-#!/home/ubuntu/flask-app/env/bin/python 
+#!/srv/www/flask-app/env/bin/python 
 from flup.server.fcgi import WSGIServer
 from app import app
 
