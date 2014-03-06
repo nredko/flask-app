@@ -58,7 +58,6 @@ def parse_book(url):
     cookie = m.Config.query.get('cookie')
     if cookie is None:
         cookie = login()
-    url = 'http://flibusta.net/b/356183'
     cj = StringCookieJar(cookie.value)
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
     urllib2.install_opener(opener)
