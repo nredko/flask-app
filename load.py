@@ -1,14 +1,52 @@
 #!env/bin/python
+# -*- coding: utf-8 -*-
 
 import feedparser
 import urllib2
+import urllib
 import re
 from BeautifulSoup import BeautifulSoup
 from datetime import datetime
 import time
 from app import model as m, db
 from sqlalchemy import exc
-# from sqlalchemy.sql.expression import true
+from cookielib import CookieJar
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
+
+class StringCookieJar(CookieJar):
+    def __init__(self, string=None, policy=None):
+        CookieJar.__init__(self, policy)
+        if string:
+            self._cookies = pickle.loads(str(string))
+    def dump(self):
+        return pickle.dumps(self._cookies)
+
+
+def login():
+    cj = StringCookieJar()
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    urllib2.install_opener(opener)
+    authentication_url = 'http://flibusta.net/node?destination=node'
+    payload = {
+        'name': 'Nike000',
+        'pass': '715434',
+        'persistent_login': '1',
+        'form_id': 'user_login_block'
+    }
+    data = urllib.urlencode(payload)
+    req = urllib2.Request(authentication_url, data)
+    urllib2.urlopen(req)
+    cookie = m.Config.query.get('cookie')
+    if cookie is None:
+        cookie = m.Config('cookie', cj.dump())
+        db.session.add(cookie)
+    else:
+        cookie.value = cj.dump()
+    db.session.commit()
+    return cookie
 
 
 def parse_book(url):
@@ -16,12 +54,26 @@ def parse_book(url):
     book = m.Book.query.get(book_id)
     if book is not None:
         return book
+
+    cookie = m.Config.query.get('cookie')
+    if cookie is None:
+        cookie = login()
+    url = 'http://flibusta.net/b/356183'
+    cj = StringCookieJar(cookie.value)
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    urllib2.install_opener(opener)
     html = urllib2.urlopen(url).read()
+
     parsed_html = BeautifulSoup(html)
     content = parsed_html.body.find('div', attrs={'id':'main'})
-
     book_title_a = content.find('h1', attrs={'class':'title'}).text
     book_title = book_title_a[:book_title_a.rfind(' ')]
+
+    if book_title == u'Книг':
+        cookie.value = None
+        db.session.commit()
+        login()
+        return parse_book(url)
 
     authors = []
     authors_added = set([])
@@ -52,12 +104,34 @@ def parse_book(url):
             genres.append(genre)
             genres_added.add(genre_id)
 
-#    print book_id + ': ' +book_title
-
     book = m.Book(book_id, book_title, authors, genres)
     db.session.add(book)
     db.session.commit()
     return book
+
+def login():
+    cj = StringCookieJar()
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    urllib2.install_opener(opener)
+    authentication_url = 'http://flibusta.net/node?destination=node'
+    payload = {
+        'name': 'Nike000',
+        'pass': '715434',
+        'persistent_login': '1',
+        'form_id': 'user_login_block'
+    }
+    data = urllib.urlencode(payload)
+    req = urllib2.Request(authentication_url, data)
+    urllib2.urlopen(req)
+    cookie = m.Config.query.get('cookie')
+    if cookie is None:
+        cookie = m.Config('cookie', cj.dump())
+        db.session.add(cookie)
+    else:
+        cookie.value = cj.dump()
+    db.session.commit()
+    return cookie
+
 
 def load():
     etag_rec = m.Config.query.get('etag')
@@ -100,15 +174,6 @@ def load():
     except Exception as e:
         print e
         pass
-
-def test():
-    html = urllib2.urlopen('http://flibusta.net/b/356183').read()
-    parsed_html = BeautifulSoup(html)
-    content = parsed_html.body.find('div', attrs={'id':'main'})
-
-    book_title_a = content.find('h1', attrs={'class':'title'}).text
-    book_title = book_title_a[:book_title_a.rfind(' ')]
-    print book_title
 
 db.create_all()
 while True:
