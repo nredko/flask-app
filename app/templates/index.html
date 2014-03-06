@@ -12,57 +12,11 @@ html, body {
 <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="/static/js/i18n/grid.locale-en.js"></script>
 <script type="text/javascript" src="/static/js/jquery.jqGrid.min.js"></script>
-<script type="text/javascript">
-jQuery(document).ready(function(){
-
-    var grid = jQuery("#keynav").jqGrid({
-        url:'/list/',
-        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        datatype: "json",
-        loadonce: true,
-        colNames:['count', 'name', 'authors','date', 'id'],
-        colModel:[
-            {name:'count',index:'count', width:90, align:"right"},
-            {name:'name', index:'name', width:100},
-            {name:'authors',index:'authors', width:80},
-            {name:'date',index:'date', width:80, align:"right"},
-            {name:'id',index:'id', width:80}
-        ],
-        jsonmap:[
-            {name:'count',index:'count', width:90, align:"right"},
-            {name:'name', index:'name', width:100},
-            {name:'authors',index:'authors', width:80},
-            {name:'date',index:'date', width:80, align:"right"},
-            {name:'id',index:'id', width:80}
-        ],
-        rowNum:-1,
-        width:1000,
-        //rowList:['1000000000'],
-        //pager: '#pkeynav',
-        sortname: 'date',
-        viewrecords: true,
-        sortorder: "desc",
-        jsonReader: {
-            repeatitems : false,
-            loadonce: true,
-            root: function (obj) { return obj.rows; },
-            page: function (obj) { return grid.jqGrid('getGridParam', 'page'); },
-            total: function (obj) { return Math.ceil(obj.rows.length / grid.jqGrid('getGridParam', 'rowNum')); },
-            records: function (obj) { return obj.rows.length; }
-        },
-        caption: "Keyboard Navigation",
-        height: '600',
-        autowidth: true
-    });
-
-    jQuery("#keynav").jqGrid('navGrid',/*'#pkeynav'*/'',{edit:false,add:false,del:false});
-    jQuery("#keynav").jqGrid('bindKeys', {"onEnter":function( rowid ) { alert("You enter a row with id:"+rowid)} } );
-});
-</script>
+<script type="text/javascript" src="/static/js/grid.js"></script>
 
 {% endblock %}
 {% block content %}
 <h2>{{ user_id }}</h2>
 <table id="keynav"></table>
-<div id="pkeynav"></div>
+<!--div id="pkeynav"></div-->
 {% endblock %}

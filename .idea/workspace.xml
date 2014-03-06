@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5d4041a-5214-494a-892f-afd1fa6a2031" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/load.py" afterPath="$PROJECT_DIR$/load.py" />
-    </list>
-    <list id="f51a47f2-0bca-4206-9135-446b209bedc0" name="New changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/test.db" afterPath="$PROJECT_DIR$/app/test.db" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/grid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/index.html" afterPath="$PROJECT_DIR$/app/templates/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
+    <list id="f51a47f2-0bca-4206-9135-446b209bedc0" name="New changelist" comment="" />
     <ignored path="flask.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +17,8 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/flask$App.coverage" NAME="App Coverage Results" MODIFIED="1394013628347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/flask$Load.coverage" NAME="Load Coverage Results" MODIFIED="1394126007028" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/flask$App.coverage" NAME="App Coverage Results" MODIFIED="1394127860912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/flask$Load.coverage" NAME="Load Coverage Results" MODIFIED="1394127817960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/flask$test.coverage" NAME="test Coverage Results" MODIFIED="1394123947394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/flask$Test.coverage" NAME="Test Coverage Results" MODIFIED="1393836365920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -95,10 +93,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="load.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="load.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/load.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="0" selection-start="1541" selection-end="1541" vertical-scroll-proportion="0.7116279" vertical-offset="561" max-vertical-offset="3145">
+            <state line="62" column="28" selection-start="1675" selection-end="1675" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="3145">
               <folding>
                 <element signature="e#42#59#0" expanded="true" />
               </folding>
@@ -106,13 +104,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.py">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="150" column="20" selection-start="4623" selection-end="4623" vertical-scroll-proportion="0.0" vertical-offset="2262" max-vertical-offset="2907">
-              <folding>
-                <element signature="e#41#58#0" expanded="true" />
-              </folding>
+            <state line="20" column="28" selection-start="797" selection-end="797" vertical-scroll-proportion="-13.076923" vertical-offset="0" max-vertical-offset="459">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grid.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/static/js/grid.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="86" column="14" selection-start="3126" selection-end="3126" vertical-scroll-proportion="0.5607903" vertical-offset="1093" max-vertical-offset="1938">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -139,9 +144,10 @@
         <option value="$PROJECT_DIR$/app/templates/base.html" />
         <option value="$PROJECT_DIR$/app/model.py" />
         <option value="$PROJECT_DIR$/app/views.py" />
-        <option value="$PROJECT_DIR$/app/templates/index.html" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/load.py" />
+        <option value="$PROJECT_DIR$/app/templates/index.html" />
+        <option value="$PROJECT_DIR$/app/static/js/grid.js" />
       </list>
     </option>
   </component>
@@ -226,7 +232,47 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flask" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flask" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flask" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flask" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -599,7 +645,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1292" height="1000" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3305174" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -687,7 +733,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="97" column="30" selection-start="3267" selection-end="3267" vertical-scroll-proportion="0.0" vertical-offset="1649" max-vertical-offset="2533">
           <folding>
-            <element signature="e#41#58#0" expanded="true" />
+            <element signature="e#41#58#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -705,7 +751,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="109" column="30" selection-start="3583" selection-end="3583" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="2941">
           <folding>
-            <element signature="e#41#58#0" expanded="true" />
+            <element signature="e#41#58#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -864,11 +910,6 @@
         <state line="50" column="32" selection-start="1448" selection-end="1448" vertical-scroll-proportion="0.8635321" vertical-offset="46" max-vertical-offset="918" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="23" selection-start="365" selection-end="365" vertical-scroll-proportion="0.1536643" vertical-offset="6" max-vertical-offset="1241" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="43" column="58" selection-start="1504" selection-end="1504" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1700">
@@ -896,21 +937,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
+    <entry file="file://$PROJECT_DIR$/load.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="150" column="20" selection-start="4623" selection-end="4623" vertical-scroll-proportion="0.0" vertical-offset="2262" max-vertical-offset="2907">
+        <state line="62" column="28" selection-start="1675" selection-end="1675" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="3145">
           <folding>
-            <element signature="e#41#58#0" expanded="true" />
+            <element signature="e#42#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/load.py">
+    <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="0" selection-start="1541" selection-end="1541" vertical-scroll-proportion="0.7116279" vertical-offset="561" max-vertical-offset="3145">
+        <state line="150" column="20" selection-start="4623" selection-end="4623" vertical-scroll-proportion="0.4574468" vertical-offset="2249" max-vertical-offset="2907">
           <folding>
-            <element signature="e#42#59#0" expanded="true" />
+            <element signature="e#41#58#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="28" selection-start="797" selection-end="797" vertical-scroll-proportion="-13.076923" vertical-offset="0" max-vertical-offset="459">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/js/grid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="14" selection-start="3126" selection-end="3126" vertical-scroll-proportion="0.5607903" vertical-offset="1093" max-vertical-offset="1938">
+          <folding />
         </state>
       </provider>
     </entry>
