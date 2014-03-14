@@ -66,17 +66,17 @@ jQuery(document).ready(function(){
             records: function (obj) { return obj.rows.length; }
         },
         rowNum:-1,
-        width:1000,
+        autwidth: true,
         //rowList:['1000000000'],
         //pager: '#pkeynav',
         sortname: 'date',
         viewrecords: true,
         sortorder: "desc",
-        multiselect: true,
-        caption: "Keyboard Navigation",
-        height: '600',
-        autowidth: true,
-        beforeSelectRow: handleMultiSelect
+        /* multiselect: true,*/
+        caption: "List",
+        height: '400',
+        width: '800',
+        /* beforeSelectRow: handleMultiSelect */
     }).jqGrid('hideCol', 'cb');
 
     jQuery("#keynav").jqGrid('navGrid',/*'#pkeynav'*/'',{edit:false,add:false,del:false});
@@ -96,7 +96,7 @@ jQuery(document).ready(function(){
             if(e.ctrlKey) isCtrl = false;
         });
     };
-
+/*
     $.ctrl('A', function() {
         grid.jqGrid('resetSelection');
         var ids = grid.getDataIDs();
@@ -104,5 +104,6 @@ jQuery(document).ready(function(){
             grid.jqGrid('setSelection',ids[i], true);
         }
     });
+*/
 });
 
