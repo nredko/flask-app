@@ -10,6 +10,11 @@ html, body {
     padding: 0;
     /*font-size: 80%;*/
 }
+.center-table
+{
+  margin: 0 auto !important;
+  float: none !important;
+}
 </style>
 <SCRIPT type="text/javascript" src="/static/js/jquery.splitter-0.6.0.js"></SCRIPT>
 
@@ -22,23 +27,25 @@ html, body {
 
     var myLayout;
     $(document).ready(function(){
-         $('#content').height(1000).split({orientation:'horizontal', position: '50%'});
+         $('#content').height(800).split({orientation:'horizontal', position: '50%'});
          $('#topPane').on('resize', function(event){
+             //console.log($('#topPane').height())
              grid.setCaption("");
              $(".ui-jqgrid-titlebar").hide();
              grid.jqGrid('setGridHeight', $('#topPane').height() - $(".ui-jqgrid-hdiv").height() - 5);
         });
         $('#topPane').trigger('resize');
     });
+
     </script>
 
 {% endblock %}
 {% block content %}
-    <div id="content">
-        <div id="topPane">
+<div id="content" class="row">
+        <div id="topPane" class="col-md-6 col-md-offset-2">
             <table id="keynav"></table>
         </div>
         <div id="bottomPane">
         </div>
-    </div>
+</div>
 {% endblock %}

@@ -76,7 +76,8 @@
                             panel_1.height(n-sw);
                             panel_2.height(self.height()-n-sw);
                             position = n;
-                            $('#topPane').trigger('resize');
+                            panel_1.trigger('resize');
+                            panel_2.trigger('resize');
                         }
                     };
                 } else {
