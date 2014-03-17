@@ -30,6 +30,10 @@ var handleMultiSelect = function (rowid, e) {
     }
     return true;
 };
+function makeLink(cellValue, options, rowdata, action) 
+{
+    return "<a target='_new' href='http://flibusta.net/b/" + cellValue + "' >"+cellValue+"</a>";
+}   
 
 var grid = {}
 jQuery(document).ready(function(){
@@ -39,23 +43,15 @@ jQuery(document).ready(function(){
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         datatype: "json",
         loadonce: true,
-        colNames:['count', 'name', 'authors','date', 'id', 'body'],
+        colNames:['#', 'Наименование', 'Авторы','Дата', 'id', 'body'],
         colModel:[
-            {name:'count',index:'count', width:90, align:"right"},
-            {name:'name', index:'name', width:100},
-            {name:'authors',index:'authors', width:80},
-            {name:'date',index:'date', width:80, align:"right"},
-            {name:'id',index:'id', width:80},
+            {name:'count',index:'count', width:20, align:"right"},
+            {name:'name', index:'name', width:200},
+            {name:'authors',index:'authors', width:100},
+            {name:'date',index:'date', width:60, align:"right", formatter:'date', formatoptions: {srcformat:'Y-m-d h:i:s.000000', newformat:'d.m.Y h:i'}},
+            {name:'id',index:'id', width:50, formatter: makeLink, align: "center"},
             {name: 'body', index: '', hidden: true }
 
-        ],
-        jsonmap:[
-            {name:'count',index:'count', width:90, align:"right"},
-            {name:'name', index:'name', width:100},
-            {name:'authors',index:'authors', width:80},
-            {name:'date',index:'date', width:80, align:"right"},
-            {name:'id',index:'id', width:80},
-            {name: 'body', index: '', hidden: true }
         ],
         jsonReader: {
             repeatitems : false,
@@ -77,10 +73,15 @@ jQuery(document).ready(function(){
         height: '400',
         width: '800',
         /* beforeSelectRow: handleMultiSelect */
+        onSelectRow: function(id){ 
+            var row = $(this).jqGrid('getRowData', id);
+            $('#body').html(row.body); 
+        } 
     }).jqGrid('hideCol', 'cb');
 
-    jQuery("#keynav").jqGrid('navGrid',/*'#pkeynav'*/'',{edit:false,add:false,del:false});
-    jQuery("#keynav").jqGrid('bindKeys', {"onEnter":function( rowid ) { alert("You enter a row with id:"+rowid)} } );
+    grid.jqGrid('navGrid',/*'#pkeynav'*/'',{edit:false,add:false,del:false});
+    grid.jqGrid('bindKeys', {"onEnter":function( rowid ) { alert("You enter a row with id:"+rowid)} } );
+    grid.jqGrid('navGrid',/*'#pkeynav'*/'',{edit:false,add:false,del:false});
 
     $.ctrl = function(key, callback, args) {
         var isCtrl = false;
@@ -96,6 +97,10 @@ jQuery(document).ready(function(){
             if(e.ctrlKey) isCtrl = false;
         });
     };
+
+
+
+
 /*
     $.ctrl('A', function() {
         grid.jqGrid('resetSelection');
@@ -105,5 +110,9 @@ jQuery(document).ready(function(){
         }
     });
 */
+
+
+
+
 });
 
