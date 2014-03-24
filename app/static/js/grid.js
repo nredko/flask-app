@@ -80,9 +80,23 @@ jQuery(document).ready(function(){
     }).jqGrid('hideCol', 'cb');
 
     grid.jqGrid('navGrid',/*'#pkeynav'*/'',{edit:false,add:false,del:false});
-    grid.jqGrid('bindKeys', {"onEnter":function( rowid ) { alert("You enter a row with id:"+rowid)} } );
-    grid.jqGrid('navGrid',/*'#pkeynav'*/'',{edit:false,add:false,del:false});
 
+    grid.jqGrid('bindKeys', {"onEnter":function( rowid ) { alert("You enter a row with id:"+rowid)} } );
+
+    $(grid).keydown(function(e) {
+        switch(e.keyCode){
+            case 45: //Ins
+            case 'r'.charCodeAt(0):
+                var row = grid.jqGrid('getGridParam','selrow');
+                alert(row);
+
+                break;
+            case 'i'.charCodeAt(0):
+                break;
+        }
+    });
+
+/*    
     $.ctrl = function(key, callback, args) {
         var isCtrl = false;
         $(grid).keydown(function(e) {
@@ -98,10 +112,6 @@ jQuery(document).ready(function(){
         });
     };
 
-
-
-
-/*
     $.ctrl('A', function() {
         grid.jqGrid('resetSelection');
         var ids = grid.getDataIDs();
