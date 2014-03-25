@@ -143,9 +143,21 @@ class Post(db.Model, Base):
     def __repr__(self):
         return '<Post %r>' % self.title
 
+read_posts = db.Table('read_posts',
+                db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+                db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
+)
+
+read_books = db.Table('read_books',
+                db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+                db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
+)
+
+
+
 class List():
     @classmethod
-    def query(cls):
+    def query(cls, user_id):
         result = db.session.execute((
             u'select count(post.id) count, b.*, c.dt date, Group_Concat(\'<div>\'||post.body||\'</div>\',\'<hr>\') body from (select book.*, authors from '
             u'book left join (select book_id, Group_Concat(SUBSTR(\' \'||name,1+length(rtrim(\' \'||name, '
