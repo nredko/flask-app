@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b5d4041a-5214-494a-892f-afd1fa6a2031" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/test.db" afterPath="$PROJECT_DIR$/app/test.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="flask.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,11 +91,55 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="13" selection-start="1472" selection-end="1472" vertical-scroll-proportion="0.5412736" vertical-offset="306" max-vertical-offset="1156">
+            <state line="35" column="20" selection-start="1036" selection-end="1036" vertical-scroll-proportion="-11.846154" vertical-offset="287" max-vertical-offset="1156">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AlchemyModelDependency/#flask" pinned="false" current="true" current-in-tab="true">
+        <entry file="uml://AlchemyModelDependency/#flask">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>AlchemyModelDependency</ID>
+              <OriginalElement>#flask</OriginalElement>
+              <nodes>
+                <node x="162.0" y="10.0">app.model.Author</node>
+                <node x="86.0" y="138.0">app.model.Book</node>
+                <node x="0.0" y="449.0">app.model.Config</node>
+                <node x="-36.0" y="-6.0">app.model.Genre</node>
+                <node x="45.0" y="256.0">app.model.Post</node>
+                <node x="329.0" y="0.0">app.model.User</node>
+              </nodes>
+              <notes />
+              <edges>
+                <edge source="app.model.Post" target="app.model.Book">
+                  <point x="0.0" y="-74.0" />
+                  <point x="0.0" y="34.0" />
+                </edge>
+                <edge source="app.model.Book" target="app.model.Genre">
+                  <point x="-30.5" y="-34.0" />
+                  <point x="116.5" y="113.0" />
+                  <point x="71.0" y="113.0" />
+                  <point x="0.0" y="44.0" />
+                </edge>
+                <edge source="app.model.Book" target="app.model.Author">
+                  <point x="30.5" y="-34.0" />
+                  <point x="177.5" y="113.0" />
+                  <point x="223.0" y="113.0" />
+                  <point x="0.0" y="34.0" />
+                </edge>
+              </edges>
+              <settings layout="Hierarchic Group" zoom="1.0" x="234.5" y="255.5" />
+              <SelectedNodes>
+                <node>app.model.Post</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Fields</Category>
+              </Categories>
             </state>
           </provider>
         </entry>
@@ -120,7 +165,7 @@
       <file leaf-file-name="grid.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/js/grid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="52" selection-start="879" selection-end="918" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="2108">
+            <state line="32" column="52" selection-start="879" selection-end="918" vertical-scroll-proportion="0.0" vertical-offset="1377" max-vertical-offset="2278">
               <folding />
             </state>
           </provider>
@@ -209,6 +254,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -237,85 +283,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="env" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flask" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flask" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flask" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flask" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flask" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flask" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flask" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flask" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -678,15 +651,15 @@
     <option name="totallyTimeSpent" value="18202000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22364217" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22790202" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39666668" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39809927" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -939,28 +912,6 @@
         <state line="249" column="0" selection-start="9794" selection-end="9794" vertical-scroll-proportion="0.0" vertical-offset="4035" max-vertical-offset="6052" />
       </provider>
     </entry>
-    <entry file="uml://AlchemyModelDependency/#flask">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>AlchemyModelDependency</ID>
-          <OriginalElement>#flask</OriginalElement>
-          <nodes>
-            <node x="" y="">app.model.Author</node>
-            <node x="" y="">app.model.Book</node>
-            <node x="" y="">app.model.Config</node>
-            <node x="" y="">app.model.Genre</node>
-            <node x="" y="">app.model.Post</node>
-            <node x="" y="">app.model.User</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="137.0" y="129.0" />
-          <SelectedNodes />
-          <Categories />
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/bin/python27/Lib/httplib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="771" column="0" selection-start="26395" selection-end="26395" vertical-scroll-proportion="0.33396226" vertical-offset="12845" max-vertical-offset="22831" />
@@ -1036,15 +987,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/grid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="52" selection-start="879" selection-end="918" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="2108">
+        <state line="32" column="52" selection-start="879" selection-end="918" vertical-scroll-proportion="0.0" vertical-offset="1377" max-vertical-offset="2278">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="13" selection-start="1472" selection-end="1472" vertical-scroll-proportion="0.5412736" vertical-offset="306" max-vertical-offset="1156">
+        <state line="35" column="20" selection-start="1036" selection-end="1036" vertical-scroll-proportion="-11.846154" vertical-offset="287" max-vertical-offset="1156">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://AlchemyModelDependency/#flask">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>AlchemyModelDependency</ID>
+          <OriginalElement>#flask</OriginalElement>
+          <nodes>
+            <node x="162.0" y="10.0">app.model.Author</node>
+            <node x="86.0" y="138.0">app.model.Book</node>
+            <node x="0.0" y="449.0">app.model.Config</node>
+            <node x="-36.0" y="-6.0">app.model.Genre</node>
+            <node x="45.0" y="256.0">app.model.Post</node>
+            <node x="329.0" y="0.0">app.model.User</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="app.model.Post" target="app.model.Book">
+              <point x="0.0" y="-74.0" />
+              <point x="0.0" y="34.0" />
+            </edge>
+            <edge source="app.model.Book" target="app.model.Genre">
+              <point x="-30.5" y="-34.0" />
+              <point x="116.5" y="113.0" />
+              <point x="71.0" y="113.0" />
+              <point x="0.0" y="44.0" />
+            </edge>
+            <edge source="app.model.Book" target="app.model.Author">
+              <point x="30.5" y="-34.0" />
+              <point x="177.5" y="113.0" />
+              <point x="223.0" y="113.0" />
+              <point x="0.0" y="34.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="234.5" y="255.5" />
+          <SelectedNodes>
+            <node>app.model.Post</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Fields</Category>
+          </Categories>
         </state>
       </provider>
     </entry>
