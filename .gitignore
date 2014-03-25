@@ -36,5 +36,4 @@ nosetests.xml
 .pydevproject
 
 env
-test.db
 .idea
