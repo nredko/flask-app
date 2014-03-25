@@ -94,6 +94,13 @@ def templated(template=None):
         return decorated_function
     return decorator
 
+def exec_sql(sql, params):
+    result = db.session.execute(sql, params)
+    ret = [dict(x) for x in result]
+    return ret
+
+
+
 app.config["USERS"] = (("admin", hash_pass("123")), ("", ""))
 app.config["REMEMBER_COOKIE_DURATION"] = timedelta(days=14)
 login_manager.login_view = "/login/"

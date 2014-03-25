@@ -48,4 +48,20 @@ def book(book_id):
 @app.route("/list/")
 #@login_required
 def list():
-    return jsonify(rows=m.List.query())
+    user_id = (current_user.get_id() or 0)
+    return jsonify(rows=m.List.query(user_id))
+
+@app.route("/read/book/<int:book_id>", methods=["POST"])
+def read_book(book_id=0):
+    user_id = current_user.get_id()
+    if not user_id:
+        return 'BAD_LOGIN'
+    return mark_read_book(user_id, book_id)
+
+@app.route("/read/posts/<int:book_id>", methods=["POST"])
+def read_posts(book_id=0):
+    user_id = current_user.get_id()
+    if not user_id:
+        return 'BAD_LOGIN'
+    return mark_read_posts(user_id, book_id)
+
