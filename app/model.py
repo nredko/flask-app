@@ -159,13 +159,13 @@ read_books = db.Table('read_books',
 class List():
     @classmethod
     def query(cls, user_id):
-        result = db.session.execute(text(s.select_posts), {'user_id': user_id})
+        result = db.session.execute(text(s.sql_select_posts), {'user_id': user_id})
         ret = [dict(x) for x in result]
         return ret
 
 def mark_read_book(user_id, book_id):
-    return exec_sql(s.read_book, {'user_id': user_id, 'book_id': book_id})
+    exec_sql(s.sql_mark_read_book, {'user_id': user_id, 'book_id': book_id})
 
 def mark_read_posts(user_id, book_id):
-    return exec_sql(s.read_posts, {'user_id': user_id, 'book_id': book_id})
+    exec_sql(s.sql_mark_read_posts, {'user_id': user_id, 'book_id': book_id})
     

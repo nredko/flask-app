@@ -97,6 +97,8 @@ def templated(template=None):
 
 def exec_sql(sql, params):
     result = db.session.execute(sql, params)
+    if not result.return_rows:
+        return
     ret = [dict(x) for x in result]
     return ret
 

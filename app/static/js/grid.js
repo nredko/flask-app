@@ -86,14 +86,25 @@ jQuery(document).ready(function(){
     $(grid).keydown(function(e) {
         switch(e.keyCode){
             case 45: //Ins
-            case 'r'.charCodeAt(0):
+            case 82: //r
                 var row = grid.jqGrid('getGridParam','selrow');
-                alert("read posts" + row);
-
+                $.ajax({
+                   type: "GET",
+                   url: "/read/posts/"+row,
+                   success: function(msg){
+                     $.growlUI(msg.result);
+                   }
+                 });
                 break;
-            case 'b'.charCodeAt(0):
+            case 66://b
                 var row = grid.jqGrid('getGridParam','selrow');
-                alert("read posts" + row);
+                $.ajax({
+                   type: "GET",
+                   url: "/read/book/"+row,
+                   success: function(msg){
+                     $.growlUI(msg.result);
+                   }
+                 });
 
                 break;
             case 'i'.charCodeAt(0):
