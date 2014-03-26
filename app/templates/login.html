@@ -5,9 +5,9 @@
 {% block content %}
       <form class="form-signin" role="form" method="POST" >
         {% if error %}
-        <h2 class="form-signin-headin   g error">{{ error }}</h2>
+        <h2 class="form-signin-heading error">{{ error }}</h2>
         {% else %}
-        <h2 class="form-signin-headin   g">Please sign in</h2>
+        <h2 class="form-signin-heading">Please sign in</h2>
         {% endif %}
         <input type="text" class="form-control" placeholder="Username" required autofocus name="username"><br />
         <input type="password" class="form-control" placeholder="Password" required name="password">

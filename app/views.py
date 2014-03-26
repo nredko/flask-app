@@ -1,8 +1,15 @@
-from flask import render_template, redirect, flash, url_for
+import os
+from flask import render_template, redirect, flash, url_for, send_from_directory
 from flask_login import login_required, login_user, current_user, logout_user
 from app import *
 import model as m
 # https://www.openshift.com/blogs/use-flask-login-to-add-user-authentication-to-your-python-application
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 @app.route("/logout/")
 def logout_page():
     logout_user()
@@ -19,7 +26,7 @@ def login():
         flash('Bad username or password')
 
 
-@app.route('/register/' , methods=['GET','POST'])
+@app.route('/register/', methods=['GET', 'POST'])
 @templated()
 def register():
     if request.method == 'POST':
