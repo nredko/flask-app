@@ -5,7 +5,7 @@ import json
 from sqlalchemy.ext.declarative import declarative_base as real_declarative_base
 from sqlalchemy.sql import text
 
-from app import db
+from app import db, exec_sql
 import strings as s
 
 # Let's make this a class decorator

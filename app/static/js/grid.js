@@ -88,7 +88,12 @@ jQuery(document).ready(function(){
             case 45: //Ins
             case 'r'.charCodeAt(0):
                 var row = grid.jqGrid('getGridParam','selrow');
-                alert(row);
+                alert("read posts" + row);
+
+                break;
+            case 'b'.charCodeAt(0):
+                var row = grid.jqGrid('getGridParam','selrow');
+                alert("read posts" + row);
 
                 break;
             case 'i'.charCodeAt(0):

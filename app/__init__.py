@@ -94,6 +94,7 @@ def templated(template=None):
         return decorated_function
     return decorator
 
+
 def exec_sql(sql, params):
     result = db.session.execute(sql, params)
     ret = [dict(x) for x in result]

@@ -55,13 +55,13 @@ def list():
 def read_book(book_id=0):
     user_id = current_user.get_id()
     if not user_id:
-        return 'BAD_LOGIN'
-    return mark_read_book(user_id, book_id)
+        return jsonify(result='BAD_LOGIN')
+    return jsonify(result=m.mark_read_book(user_id, book_id))
 
 @app.route("/read/posts/<int:book_id>", methods=["POST"])
 def read_posts(book_id=0):
     user_id = current_user.get_id()
     if not user_id:
-        return 'BAD_LOGIN'
-    return mark_read_posts(user_id, book_id)
+        return jsonify(result='BAD_LOGIN')
+    return m.mark_read_posts(user_id, book_id)
 
