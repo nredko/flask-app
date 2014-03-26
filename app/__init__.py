@@ -45,8 +45,9 @@ def jsonify(*args, **kwargs):
                               mimetype='application/json')
 
 class User(UserMixin):
-    def __init__(self, userid, password):
+    def __init__(self, userid, username, password):
         self.id = userid
+        self.username = username
         self.password = password
 
     def get_auth_token(self):
@@ -57,7 +58,7 @@ class User(UserMixin):
     def get(userid):
         for user in app.config["USERS"]:
             if user[0] == userid:
-                return User(user[0], user[1])
+                return User(user[0], user[1], user[2])
         return None
 
 def hash_pass(password):
@@ -98,14 +99,14 @@ def templated(template=None):
 def exec_sql(sql, params):
     result = db.session.execute(sql, params)
     db.session.commit()
-    if not result.return_rows:
+    if not result.return_rows():
         return
     ret = [dict(x) for x in result]
     return ret
 
 
 
-app.config["USERS"] = (("admin", hash_pass("123")), ("", ""))
+app.config["USERS"] = ((1, "admin", hash_pass("123")), ("", ""))
 app.config["REMEMBER_COOKIE_DURATION"] = timedelta(days=14)
 login_manager.login_view = "/login/"
 login_manager.init_app(app)
