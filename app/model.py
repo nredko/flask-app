@@ -13,9 +13,6 @@ declarative_base = lambda cls: real_declarative_base(cls=cls)
 
 @declarative_base
 class Base(object):
-    """
-    Add some default properties and methods to the SQLAlchemy declarative base.
-    """
     __exclude__ = ()
 
     @property
@@ -31,10 +28,6 @@ class Base(object):
                 continue
             dic[k] = getattr(self, k)
         return dic
-
-    # @property
-    # def columnitems(self):
-    #     return dict([ (c, getattr(self, c)) for c in self.columns ])
 
     def __repr__(self):
         return '{}({})'.format(self.__class__.__name__, self.columnitems)

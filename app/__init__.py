@@ -1,14 +1,14 @@
 from datetime import timedelta
 import md5
 
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, g
 from flask_login import (LoginManager, login_required, login_user, 
                          current_user, logout_user, UserMixin)
 from itsdangerous import URLSafeTimedSerializer
 from functools import wraps
 from flask.ext.sqlalchemy import SQLAlchemy
 import json, datetime
-
+from model import User
 app = Flask(__name__)
 app.debug = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
@@ -19,11 +19,6 @@ login_serializer = URLSafeTimedSerializer(app.secret_key)
 login_manager = LoginManager()
 
 class JSONEncoder(json.JSONEncoder):
-    """
-    Wrapper class to try calling an object's tojson() method. This allows
-    us to JSONify objects coming from the ORM. Also handles dates and datetimes.
-    """
-
     def default(self, obj):
         if isinstance(obj, datetime.datetime):
             return obj.isoformat()
@@ -36,38 +31,15 @@ class JSONEncoder(json.JSONEncoder):
                 return json.JSONEncoder.default(self, err)
 
 def jsonify(*args, **kwargs):
-    """
-    Workaround for Flask's jsonify not allowing replacement of the JSONEncoder
-    in my version of Flask.
-    """
-    return app.response_class(json.dumps(dict(*args, **kwargs),
-                                         cls=JSONEncoder),
-                              mimetype='application/json')
-
-class User(UserMixin):
-    def __init__(self, userid, username, password):
-        self.id = userid
-        self.username = username
-        self.password = password
-
-    def get_auth_token(self):
-        data = [str(self.id), self.password]
-        return login_serializer.dumps(data)
-
-    @staticmethod
-    def get(userid):
-        for user in app.config["USERS"]:
-            if user[0] == userid:
-                return User(user[0], user[1], user[2])
-        return None
+    return app.response_class(json.dumps(dict(*args, **kwargs), cls=JSONEncoder), mimetype='application/json')
 
 def hash_pass(password):
     salted_password = password + app.secret_key
     return md5.new(salted_password).hexdigest()
 
 @login_manager.user_loader
-def load_user(userid):
-    return User.get(userid)
+def load_user(id):
+    return User.query.get(int(id))
 
 @login_manager.token_loader
 def load_token(token):
@@ -77,6 +49,10 @@ def load_token(token):
     if user and data[1] == user.password:
         return user
     return None
+
+@app.before_request
+def before_request():
+    g.user = current_user
 
 def templated(template=None):
     def decorator(f):

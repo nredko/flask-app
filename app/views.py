@@ -19,18 +19,24 @@ def logout_page():
 @templated()
 def login():
     if request.method == "POST":
-        user = User.get(request.form['username'])
-        if user and hash_pass(request.form['password']) == user.password:
-            login_user(user, remember=True)
-            return redirect(request.args.get("next") or "/")        
-        flash('Bad username or password')
-
+        username = request.form['username']
+        password = request.form['password']
+        registered_user = User.query.filter_by(username=username, password=hash_pass(password)).first()
+        if registered_user is None:
+            flash('Username or Password is invalid', 'error')
+            return redirect(url_for('login'))
+        remember_me = False
+        if 'remember-me' in request.form:
+            remember_me = True
+        login_user(registered_user, remember=remember_me)
+        flash('Logged in successfully')
+        return redirect(request.args.get('next') or url_for('index'))
 
 @app.route('/register/', methods=['GET', 'POST'])
 @templated()
 def register():
     if request.method == 'POST':
-        user = User(request.form['username'] , request.form['password'],request.form['email'])
+        user = User(request.form['username'], hash_pass(request.form['password']), request.form['email'])
         db.session.add(user)
         db.session.commit()
         flash('User successfully registered')
