@@ -4,9 +4,17 @@ from datetime import datetime
 import json
 from sqlalchemy.ext.declarative import declarative_base as real_declarative_base
 from sqlalchemy.sql import text
-
-from app import db, exec_sql
+from app import db
 import strings as s
+
+
+def exec_sql(sql, params):
+    result = db.session.execute(sql, params)
+    db.session.commit()
+    if not result.return_rows():
+        return
+    ret = [dict(x) for x in result]
+    return ret
 
 # Let's make this a class decorator
 declarative_base = lambda cls: real_declarative_base(cls=cls)
@@ -35,18 +43,19 @@ class Base(object):
     def tojson(self):
         return self.columnitems
 
+
 class User(db.Model, Base):
-    id = db.Column('user_id',db.Integer , primary_key=True)
+    id = db.Column('id', db.Integer, primary_key=True)
     username = db.Column('username', db.String(20), unique=True , index=True)
-    password = db.Column('password' , db.String(10))
+    password = db.Column('password', db.String(10))
     email = db.Column('email',db.String(50),unique=True , index=True)
-    registered_on = db.Column('registered_on' , db.DateTime)
+    registered = db.Column('registered', db.DateTime)
 
     def __init__(self , username ,password , email):
         self.username = username
         self.password = password
         self.email = email
-        self.registered_on = datetime.utcnow()
+        self.registered = datetime.utcnow()
 
     def is_authenticated(self):
         return True
@@ -63,6 +72,7 @@ class User(db.Model, Base):
     def __repr__(self):
         return '<User %r>' % (self.username)
 
+
 class Config(db.Model, Base):
     param = db.Column(db.String(20), primary_key=True)
     value = db.Column(db.String(120))
@@ -70,6 +80,7 @@ class Config(db.Model, Base):
     def __init__(self, param, value):
         self.param = param
         self.value = value
+
 
 class Author(db.Model, Base):
     __exclude__ = ('authors')
@@ -101,12 +112,12 @@ class Genre(db.Model, Base):
 book_authors = db.Table('book_authors',
                 db.Column('book_id', db.Integer, db.ForeignKey('book.id')),
                 db.Column('author_id', db.Integer, db.ForeignKey('author.id'))
-)
+    )
 
 book_genres = db.Table('book_genres',
                 db.Column('genre_id', db.Integer, db.ForeignKey('genre.id')),
                 db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
-)
+    )
 
 
 class Book(db.Model, Base):
@@ -138,7 +149,6 @@ class Post(db.Model, Base):
     book_id = db.Column(db.Integer,db.ForeignKey('book.id'))
     book = db.relationship('Book', backref=db.backref('post', lazy='dynamic'))
 
-
     def __init__(self, id, title, body, book, pub_date=None, user = None):
         self.id = id
         self.title = title
@@ -149,21 +159,18 @@ class Post(db.Model, Base):
         self.body = body
         self.user = user
 
-
     def __repr__(self):
         return '<Post %r>' % self.title
 
 read_posts = db.Table('read_posts',
                 db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
                 db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
-)
+    )
 
 read_books = db.Table('read_books',
                 db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
                 db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
-)
-
-
+    )
 
 class List():
     @classmethod

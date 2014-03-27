@@ -3,7 +3,6 @@ from flask import render_template, redirect, flash, url_for, send_from_directory
 from flask_login import login_required, login_user, current_user, logout_user
 from app import *
 import model as m
-# https://www.openshift.com/blogs/use-flask-login-to-add-user-authentication-to-your-python-application
 
 @app.route('/favicon.ico')
 def favicon():
@@ -21,7 +20,7 @@ def login():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
-        registered_user = User.query.filter_by(username=username, password=hash_pass(password)).first()
+        registered_user = m.User.query.filter_by(username=username, password=hash_pass(password)).first()
         if registered_user is None:
             flash('Username or Password is invalid', 'error')
             return redirect(url_for('login'))
@@ -36,16 +35,19 @@ def login():
 @templated()
 def register():
     if request.method == 'POST':
-        user = User(request.form['username'], hash_pass(request.form['password']), request.form['email'])
+        user = m.User(request.form['username'], hash_pass(request.form['password']), request.form['email'])
         db.session.add(user)
         db.session.commit()
         flash('User successfully registered')
         return redirect(url_for('login'))
 
 @app.route("/")
+@login_required
 @templated()
 def index():
-    user_id = (current_user.get_id() or "No User Logged In")
+    user_id = current_user.get_id()
+    if not user_id:
+        return redirect(url_for('login'))
     return dict(user_id=user_id)
 
 @app.route("/restricted/")
@@ -81,7 +83,7 @@ def read_book(book_id=0):
     if not user_id:
         return jsonify(result='BAD_LOGIN')
     result=m.mark_read_book(user_id, book_id)
-    return jsonify(result='OK '+book_id)
+    return jsonify(result='OK '+str(book_id))
 
 @app.route("/read/posts/<int:book_id>")
 def read_posts(book_id=0):
@@ -89,5 +91,5 @@ def read_posts(book_id=0):
     if not user_id:
         return jsonify(result='BAD_LOGIN')
     m.mark_read_posts(user_id, book_id)
-    return jsonify(result='OK '+book_id)
+    return jsonify(result='OK '+str(book_id))
 
