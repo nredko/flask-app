@@ -1,12 +1,13 @@
 # https://www.openshift.com/blogs/use-flask-login-to-add-user-authentication-to-your-python-application
 
-from flask_login import (LoginManager, login_required, login_user,
+from flask.ext.login import (LoginManager, login_required, login_user,
                          current_user, logout_user, UserMixin)
 
 from model import User
 
 from app import login_manager, login_serializer, hash_pass
 from flask import current_app as app
+
 
 login_manager.login_view = 'login'
 
@@ -26,6 +27,3 @@ def load_token(token):
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
-login_manager.login_view = "/login/"
-login_manager.init_app(app)

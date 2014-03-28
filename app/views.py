@@ -1,6 +1,6 @@
 import os
-from flask import render_template, redirect, flash, url_for, send_from_directory
-from flask_login import login_required, login_user, current_user, logout_user
+from flask import g, redirect, flash, url_for, send_from_directory
+from flask_login import login_required, login_user, logout_user
 from app import *
 import model as m
 
@@ -12,7 +12,8 @@ def favicon():
 @app.route("/logout/")
 def logout_page():
     logout_user()
-    return redirect(url_for("/login"))
+    return redirect(url_for("login"))
+
 
 @app.route("/login/", methods=["GET", "POST"])
 @templated()
@@ -31,6 +32,7 @@ def login():
         flash('Logged in successfully')
         return redirect(request.args.get('next') or url_for('index'))
 
+
 @app.route('/register/', methods=['GET', 'POST'])
 @templated()
 def register():
@@ -41,55 +43,49 @@ def register():
         flash('User successfully registered')
         return redirect(url_for('login'))
 
+
 @app.route("/")
 @login_required
 @templated()
 def index():
-    user_id = current_user.get_id()
-    if not user_id:
-        return redirect(url_for('login'))
-    return dict(user_id=user_id)
+    return dict(user_id=g.user_id)
 
-@app.route("/restricted/")
-@login_required
-@templated()
-def restricted():
-    user_id = (current_user.get_id() or "No User Logged In")
-    return dict(user_id=user_id)
-
-@app.route("/posts/")
-@app.route("/post/<int:post_id>")
-@login_required
-def post(post_id=0):
-    if post_id != 0:
-        return jsonify(post=m.Post.query.get(post_id))
-    posts = m.Post.query.order_by(m.Post.pub_date.desc()).all()
-    return jsonify(posts=posts)
 
 @app.route("/book/<int:book_id>")
-@login_required
+@restricted
 def book(book_id):
     return jsonify(book=m.Book.query.get(book_id))
 
+
 @app.route("/list/")
-@login_required
-def list():
-    user_id = (current_user.get_id() or 0)
-    return jsonify(rows=m.List.query(user_id))
+@restricted
+def get_list():
+    return jsonify(rows=m.get_list(g.user_id))
+
 
 @app.route("/read/book/<int:book_id>")
+@restricted
 def read_book(book_id=0):
-    user_id = current_user.get_id()
-    if not user_id:
-        return jsonify(result='BAD_LOGIN')
-    result=m.mark_read_book(user_id, book_id)
+    m.mark_read_book(g.user_id, book_id)
     return jsonify(result='OK '+str(book_id))
+
 
 @app.route("/read/posts/<int:book_id>")
+@restricted
 def read_posts(book_id=0):
-    user_id = current_user.get_id()
-    if not user_id:
-        return jsonify(result='BAD_LOGIN')
-    m.mark_read_posts(user_id, book_id)
+    m.mark_read_posts(g.user_id, book_id)
     return jsonify(result='OK '+str(book_id))
 
+
+@app.route("/unread/book/<int:book_id>")
+@restricted
+def unread_book(book_id=0):
+    m.mark_unread_book(g.user_id, book_id)
+    return jsonify(result='OK '+str(book_id))
+
+
+@app.route("/unread/posts/<int:book_id>")
+@restricted
+def unread_posts(book_id=0):
+    m.mark_unread_posts(g.user_id, book_id)
+    return jsonify(result='OK '+str(book_id))

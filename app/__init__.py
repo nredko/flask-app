@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, g
+from flask import Flask, request, render_template, g, abort
 #from flask_login import
 from functools import wraps
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -15,13 +15,17 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
+
 def hash_pass(password):
     salted_password = password + app.config["SECRET_KEY"]
     return sha256(salted_password).hexdigest()
 
+
 @app.before_request
 def before_request():
     g.user = current_user
+    g.user_id = current_user.get_id()
+
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -35,8 +39,10 @@ class JSONEncoder(json.JSONEncoder):
             except TypeError as err:
                 return json.JSONEncoder.default(self, err)
 
+
 def jsonify(*args, **kwargs):
     return app.response_class(json.dumps(dict(*args, **kwargs), cls=JSONEncoder), mimetype='application/json')
+
 
 def templated(template=None):
     def decorator(f):
@@ -55,6 +61,18 @@ def templated(template=None):
         return decorated_function
     return decorator
 
+
+def restricted(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if g.user_id is None:
+            abort(403)
+        return f(*args, **kwargs)
+    return decorated_function
+
+import login
 import views
+
+
 
 

@@ -36,9 +36,9 @@ function makeLink(cellValue, options, rowdata, action)
 }   
 
 var grid = {}
+var stack = [];
 jQuery(document).ready(function(){
-
-    grid = jQuery("#keynav").jqGrid({
+    grid = jQuery("#grid").jqGrid({
         url:'/list/',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         datatype: "json",
@@ -48,7 +48,7 @@ jQuery(document).ready(function(){
             {name:'count',index:'count', width:20, align:"right"},
             {name:'name', index:'name', width:200},
             {name:'authors',index:'authors', width:100},
-            {name:'date',index:'date', width:60, align:"right", formatter:'date', formatoptions: {srcformat:'Y-m-d h:i:s.000000', newformat:'d.m.Y h:i'}},
+            {name:'dt',index:'date', width:60, align:"right", formatter:'date', formatoptions: {srcformat:'Y-m-d h:i:s.000000', newformat:'d.m.Y h:i'}},
             {name:'id',index:'id', width:50, formatter: makeLink, align: "center"},
             {name: 'body', index: '', hidden: true }
 
@@ -63,15 +63,13 @@ jQuery(document).ready(function(){
         },
         rowNum:-1,
         autwidth: true,
-        //rowList:['1000000000'],
-        //pager: '#pkeynav',
         sortname: 'date',
         viewrecords: true,
         sortorder: "desc",
-        /* multiselect: true,*/
         caption: "List",
         height: '400',
         width: '800',
+        /* multiselect: true,*/
         /* beforeSelectRow: handleMultiSelect */
         onSelectRow: function(id){ 
             var row = $(this).jqGrid('getRowData', id);
@@ -81,64 +79,81 @@ jQuery(document).ready(function(){
 
     grid.jqGrid('navGrid',/*'#pkeynav'*/'',{edit:false,add:false,del:false});
 
-    grid.jqGrid('bindKeys', {"onEnter":function( rowid ) { alert("You enter a row with id:"+rowid)} } );
+    //grid.jqGrid('bindKeys', {"onEnter":function( rowid ) { alert("You enter a row with id:"+rowid)} } );
+
+    function next(selectedRow){
+        var ids = grid.getDataIDs();
+        var index = grid.getInd(selectedRow);
+        if (ids.length < 2) return;
+        index++;
+        if (index > ids.length)
+            index = 1;
+        grid.setSelection(ids[index - 1], true);
+    }
 
     $(grid).keydown(function(e) {
+        var row = grid.jqGrid('getGridParam','selrow');
         switch(e.keyCode){
             case 45: //Ins
             case 82: //r
-                var row = grid.jqGrid('getGridParam','selrow');
                 $.ajax({
                    type: "GET",
                    url: "/read/posts/"+row,
-                   success: function(msg){
-                     $.growlUI(msg.result);
+                    success: function(msg){
+                        stack.push("/unread/posts/"+row);
+                        $.growlUI(msg.result);
+                        next(row);
+                        grid.delRowData(row);
+                        $("#grid").focus();
                    }
                  });
+                $("#grid").focus();
                 break;
+
             case 66://b
-                var row = grid.jqGrid('getGridParam','selrow');
                 $.ajax({
                    type: "GET",
                    url: "/read/book/"+row,
                    success: function(msg){
-                     $.growlUI(msg.result);
+                       stack.push("/unread/book/"+row);
+                       $.growlUI(msg.result);
+                       next(row);
+                       grid.delRowData(row);
+                       $("#grid").focus();
                    }
                  });
-
                 break;
-            case 'i'.charCodeAt(0):
+
+            case 65://a
+                $.ajax({
+                   type: "GET",
+                   url: "/read/author/"+row,
+                   success: function(msg){
+                       stack.push("/unread/author/"+row);
+                       $.growlUI(msg.result);
+                       grid.delRowData(row);
+                       next(row);
+                       $("#grid").focus();
+                   }
+                 });
+                break;
+
+            case 85: //u
+                if(stack.length == 0)
+                    return;
+                var url = stack.pop()
+                $.ajax({
+                   type: "GET",
+                   url: url,
+                   success: function(msg){
+                       newGrid = $("#grid").jqGrid('setGridParam',{url:"/list/", datatype:"json"}).trigger("reloadGrid");
+                       $.growlUI("", msg.result, 2, function(){grid.setSelection(url.split("/").pop())});
+//                       newGrid = grid.setSelection(url.split("/").pop());
+                   }
+                });
+                $("#grid").focus();
                 break;
         }
     });
-
-/*    
-    $.ctrl = function(key, callback, args) {
-        var isCtrl = false;
-        $(grid).keydown(function(e) {
-            if(!args) args=[]; // IE barks when args is null
-
-            if(e.ctrlKey) isCtrl = true;
-            if(e.keyCode == key.charCodeAt(0) && isCtrl) {
-                callback.apply(this, args);
-                return false;
-            }
-        }).keyup(function(e) {
-            if(e.ctrlKey) isCtrl = false;
-        });
-    };
-
-    $.ctrl('A', function() {
-        grid.jqGrid('resetSelection');
-        var ids = grid.getDataIDs();
-        for (var i=0, il=ids.length; i < il; i++) {
-            grid.jqGrid('setSelection',ids[i], true);
-        }
-    });
-*/
-
-
-
-
 });
 

@@ -24,7 +24,7 @@ from
         ) a  
         on book.id = a.book_id
      where 
-        id not in (select post_id from read_posts where user_id=:user_id)
+        id not in (select book_id from read_books where user_id=1)
 
     ) b
     join
@@ -33,16 +33,22 @@ from
              max(pub_date) as dt
          from
              post
-         where 
-            id not in (select post_id from read_posts where user_id=:user_id)
+         where
+            id not in (select post_id from read_posts where user_id=1)
          group by
             book_id
         ) c
             on  b.id = c.book_id
      join post on post.book_id = b.id
-group by b.id"""
+group by b.id
+"""
 
 sql_mark_read_book = u"insert or ignore into read_books(book_id, user_id) values(:book_id, :user_id)"
 
 sql_mark_read_posts = u"insert or ignore into read_posts(post_id, user_id) " \
                   u"select post.id, :user_id from post where book_id = :book_id"
+
+sql_mark_unread_book = u"delete from read_books where book_id=:book_id and user_id=:user_id"
+
+sql_mark_unread_posts = u"delete from read_posts where user_id=:user_id and post_id in" \
+                        u" (select id from post where book_id=:book_id)"

@@ -38,6 +38,10 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+.blockUI{
+    width: 200px!important;
+}
+
 .growlUI h1{
     font-size: 12pt;
     color: #E00;

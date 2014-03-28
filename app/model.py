@@ -10,8 +10,8 @@ import strings as s
 
 def exec_sql(sql, params):
     result = db.session.execute(sql, params)
-    db.session.commit()
-    if not result.return_rows():
+    if not result.returns_rows:
+        db.session.commit()
         return
     ret = [dict(x) for x in result]
     return ret
@@ -146,7 +146,7 @@ class Post(db.Model, Base):
     body = db.Column(db.Text)
     pub_date = db.Column(db.DateTime)
     user = db.Column(db.String(50))
-    book_id = db.Column(db.Integer,db.ForeignKey('book.id'))
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
     book = db.relationship('Book', backref=db.backref('post', lazy='dynamic'))
 
     def __init__(self, id, title, body, book, pub_date=None, user = None):
@@ -162,26 +162,37 @@ class Post(db.Model, Base):
     def __repr__(self):
         return '<Post %r>' % self.title
 
-read_posts = db.Table('read_posts',
+read_post = db.Table('read_post',
                 db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-                db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
-    )
+                db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+                db.UniqueConstraint('user_id', 'post_id', name='uix_1'))
 
-read_books = db.Table('read_books',
+read_book = db.Table('read_book',
                 db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-                db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
-    )
+                db.Column('book_id', db.Integer, db.ForeignKey('book.id')),
+                db.UniqueConstraint('user_id', 'book_id', name='uix_1'))
 
-class List():
-    @classmethod
-    def query(cls, user_id):
-        result = db.session.execute(text(s.sql_select_posts), {'user_id': user_id})
-        ret = [dict(x) for x in result]
-        return ret
+read_author = db.Table('read_author',
+                db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+                db.Column('author_id', db.Integer, db.ForeignKey('author.id')),
+                db.UniqueConstraint('user_id', 'author_id', name='uix_1'))
+
+
+def get_list(user_id):
+    return exec_sql(s.sql_select_posts, {'user_id': user_id})
+
 
 def mark_read_book(user_id, book_id):
     exec_sql(s.sql_mark_read_book, {'user_id': user_id, 'book_id': book_id})
 
+
 def mark_read_posts(user_id, book_id):
     exec_sql(s.sql_mark_read_posts, {'user_id': user_id, 'book_id': book_id})
-    
+
+
+def mark_unread_posts(user_id, book_id):
+    exec_sql(s.sql_mark_unread_posts, {'user_id': user_id, 'book_id': book_id})
+
+
+def mark_unread_book(user_id, book_id):
+    exec_sql(s.sql_mark_unread_book, {'user_id': user_id, 'book_id': book_id})
