@@ -24,7 +24,7 @@ from
         ) a  
         on book.id = a.book_id
      where 
-        id not in (select book_id from read_books where user_id=1)
+        id not in (select book_id from read_book where user_id=:user_id)
 
     ) b
     join
@@ -34,7 +34,7 @@ from
          from
              post
          where
-            id not in (select post_id from read_posts where user_id=1)
+            id not in (select post_id from read_post where user_id=:user_id)
          group by
             book_id
         ) c
