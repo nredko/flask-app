@@ -70,9 +70,9 @@ def read_book(book_id=0):
     return jsonify(result='OK '+str(book_id))
 
 
-@app.route("/read/posts/<int:book_id>")
+@app.route("/read/post/<int:book_id>")
 @restricted
-def read_posts(book_id=0):
+def read_post(book_id=0):
     m.mark_read_post(g.user_id, book_id)
     return jsonify(result='OK '+str(book_id))
 

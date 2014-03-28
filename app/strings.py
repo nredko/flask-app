@@ -43,9 +43,9 @@ from
 group by b.id
 """
 
-sql_mark_read_book = u"insert or ignore into read_books(book_id, user_id) values(:book_id, :user_id)"
+sql_mark_read_book = u"insert or ignore into read_book(book_id, user_id) values(:book_id, :user_id)"
 
-sql_mark_read_post = u"insert or ignore into read_posts(post_id, user_id) " \
+sql_mark_read_post = u"insert or ignore into read_post(post_id, user_id) " \
                   u"select post.id, :user_id from post where book_id = :book_id"
 
 sql_mark_unread_book = u"delete from read_book where book_id=:book_id and user_id=:user_id"
