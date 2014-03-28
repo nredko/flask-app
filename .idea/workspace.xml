@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5d4041a-5214-494a-892f-afd1fa6a2031" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model.py" afterPath="$PROJECT_DIR$/app/model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/strings.py" afterPath="$PROJECT_DIR$/app/strings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views.py" afterPath="$PROJECT_DIR$/app/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="flask.iws" />
@@ -72,15 +75,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="strings.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="strings.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/strings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="47" selection-start="1609" selection-end="1609" vertical-scroll-proportion="0.0" vertical-offset="533" max-vertical-offset="1020">
+            <state line="47" column="43" selection-start="1260" selection-end="1260" vertical-scroll-proportion="0.57327586" vertical-offset="533" max-vertical-offset="1020">
               <folding>
-                <marker date="1396007964549" expanded="true" signature="1316:1375" placeholder="select post...post..." />
-                <marker date="1396007964549" expanded="true" signature="1403:1469" placeholder="delete from ..." />
-                <marker date="1396007964549" expanded="true" signature="1498:1633" placeholder="delete from ..." />
-                <marker date="1396007964549" expanded="true" signature="1590:1632" placeholder="select id fr..post..." />
+                <marker date="1396012477567" expanded="true" signature="1315:1374" placeholder="select post...post..." />
+                <marker date="1396012477567" expanded="true" signature="1402:1467" placeholder="delete from ..." />
+                <marker date="1396012477567" expanded="true" signature="1495:1629" placeholder="delete from ..." />
+                <marker date="1396012477567" expanded="true" signature="1586:1628" placeholder="select id fr..post..." />
               </folding>
             </state>
           </provider>
@@ -95,10 +98,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jquery.jqGrid.src.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="jquery.jqGrid.src.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/js/jquery.jqGrid.src.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11393" column="11" selection-start="398395" selection-end="398395" vertical-scroll-proportion="-33.084282" vertical-offset="208188" max-vertical-offset="225080">
+            <state line="12262" column="26" selection-start="429328" selection-end="429328" vertical-scroll-proportion="-9.96" vertical-offset="208188" max-vertical-offset="225080">
               <folding />
             </state>
           </provider>
@@ -125,7 +128,7 @@
       <file leaf-file-name="model.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="174" column="21" selection-start="5166" selection-end="5166" vertical-scroll-proportion="0.0" vertical-offset="2577" max-vertical-offset="3468">
+            <state line="189" column="33" selection-start="5691" selection-end="5691" vertical-scroll-proportion="0.0" vertical-offset="2985" max-vertical-offset="3468">
               <folding>
                 <element signature="e#15#58#0" expanded="true" />
               </folding>
@@ -136,7 +139,7 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="0" selection-start="2457" selection-end="2457" vertical-scroll-proportion="0.0" vertical-offset="1149" max-vertical-offset="1649">
+            <state line="75" column="20" selection-start="2132" selection-end="2132" vertical-scroll-proportion="0.0" vertical-offset="996" max-vertical-offset="1649">
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -190,13 +193,13 @@
         <option value="$PROJECT_DIR$/config.cfg" />
         <option value="$PROJECT_DIR$/app/config.py" />
         <option value="$PROJECT_DIR$/app/login.py" />
-        <option value="$PROJECT_DIR$/app/views.py" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
-        <option value="$PROJECT_DIR$/app/strings.py" />
-        <option value="$PROJECT_DIR$/app/model.py" />
         <option value="$PROJECT_DIR$/app/templates/index.html" />
         <option value="$PROJECT_DIR$/app/static/js/grid.js" />
         <option value="$PROJECT_DIR$/app/static/css/common.css" />
+        <option value="$PROJECT_DIR$/app/strings.py" />
+        <option value="$PROJECT_DIR$/app/views.py" />
+        <option value="$PROJECT_DIR$/app/model.py" />
       </list>
     </option>
   </component>
@@ -695,7 +698,11 @@
       <created>1396010386444</created>
       <updated>1396010386444</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="login, keys">
+      <created>1396012156555</created>
+      <updated>1396012156555</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1019,39 +1026,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/strings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="47" selection-start="1609" selection-end="1609" vertical-scroll-proportion="0.0" vertical-offset="533" max-vertical-offset="1020">
-          <folding>
-            <marker date="1396007964549" expanded="true" signature="1316:1375" placeholder="select post...post..." />
-            <marker date="1396007964549" expanded="true" signature="1403:1469" placeholder="delete from ..." />
-            <marker date="1396007964549" expanded="true" signature="1498:1633" placeholder="delete from ..." />
-            <marker date="1396007964549" expanded="true" signature="1590:1632" placeholder="select id fr..post..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model.py">
-      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="174" column="21" selection-start="5166" selection-end="5166" vertical-scroll-proportion="0.0" vertical-offset="2577" max-vertical-offset="3468">
-          <folding>
-            <element signature="e#15#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="0" selection-start="2457" selection-end="2457" vertical-scroll-proportion="0.0" vertical-offset="1149" max-vertical-offset="1649">
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="0" selection-start="1013" selection-end="1013" vertical-scroll-proportion="3.2692308" vertical-offset="663" max-vertical-offset="1156">
@@ -1082,8 +1056,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/jquery.jqGrid.src.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11393" column="11" selection-start="398395" selection-end="398395" vertical-scroll-proportion="-33.084282" vertical-offset="208188" max-vertical-offset="225080">
+        <state line="12262" column="26" selection-start="429328" selection-end="429328" vertical-scroll-proportion="-9.96" vertical-offset="208188" max-vertical-offset="225080">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model.py">
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="189" column="33" selection-start="5691" selection-end="5691" vertical-scroll-proportion="0.0" vertical-offset="2985" max-vertical-offset="3468">
+          <folding>
+            <element signature="e#15#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="20" selection-start="2132" selection-end="2132" vertical-scroll-proportion="0.0" vertical-offset="996" max-vertical-offset="1649">
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/strings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="43" selection-start="1260" selection-end="1260" vertical-scroll-proportion="0.57327586" vertical-offset="533" max-vertical-offset="1020">
+          <folding>
+            <marker date="1396012477567" expanded="true" signature="1315:1374" placeholder="select post...post..." />
+            <marker date="1396012477567" expanded="true" signature="1402:1467" placeholder="delete from ..." />
+            <marker date="1396012477567" expanded="true" signature="1495:1629" placeholder="delete from ..." />
+            <marker date="1396012477567" expanded="true" signature="1586:1628" placeholder="select id fr..post..." />
+          </folding>
         </state>
       </provider>
     </entry>

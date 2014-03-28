@@ -73,7 +73,7 @@ def read_book(book_id=0):
 @app.route("/read/posts/<int:book_id>")
 @restricted
 def read_posts(book_id=0):
-    m.mark_read_posts(g.user_id, book_id)
+    m.mark_read_post(g.user_id, book_id)
     return jsonify(result='OK '+str(book_id))
 
 
@@ -87,5 +87,5 @@ def unread_book(book_id=0):
 @app.route("/unread/posts/<int:book_id>")
 @restricted
 def unread_posts(book_id=0):
-    m.mark_unread_posts(g.user_id, book_id)
+    m.mark_unread_post(g.user_id, book_id)
     return jsonify(result='OK '+str(book_id))

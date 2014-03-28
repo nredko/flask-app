@@ -45,10 +45,10 @@ group by b.id
 
 sql_mark_read_book = u"insert or ignore into read_books(book_id, user_id) values(:book_id, :user_id)"
 
-sql_mark_read_posts = u"insert or ignore into read_posts(post_id, user_id) " \
+sql_mark_read_post = u"insert or ignore into read_posts(post_id, user_id) " \
                   u"select post.id, :user_id from post where book_id = :book_id"
 
-sql_mark_unread_book = u"delete from read_books where book_id=:book_id and user_id=:user_id"
+sql_mark_unread_book = u"delete from read_book where book_id=:book_id and user_id=:user_id"
 
-sql_mark_unread_posts = u"delete from read_posts where user_id=:user_id and post_id in" \
+sql_mark_unread_post = u"delete from read_post where user_id=:user_id and post_id in" \
                         u" (select id from post where book_id=:book_id)"
