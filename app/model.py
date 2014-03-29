@@ -190,9 +190,16 @@ def mark_read_post(user_id, book_id):
     exec_sql(s.sql_mark_read_post, {'user_id': user_id, 'book_id': book_id})
 
 
+def mark_read_author(user_id, book_id):
+    exec_sql(s.sql_mark_read_author, {'user_id': user_id, 'book_id': book_id})
+
+
 def mark_unread_post(user_id, book_id):
     exec_sql(s.sql_mark_unread_post, {'user_id': user_id, 'book_id': book_id})
 
 
 def mark_unread_book(user_id, book_id):
     exec_sql(s.sql_mark_unread_book, {'user_id': user_id, 'book_id': book_id})
+
+def mark_unread_author(user_id, book_id):
+    exec_sql(s.sql_mark_unread_author, {'user_id': user_id, 'book_id': book_id})

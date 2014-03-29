@@ -98,9 +98,9 @@ jQuery(document).ready(function(){
             case 82: //r
                 $.ajax({
                    type: "GET",
-                   url: "/read/posts/"+row,
+                   url: "/read/post/"+row,
                     success: function(msg){
-                        stack.push("/unread/posts/"+row);
+                        stack.push("/unread/post/"+row);
                         $.growlUI(msg.result);
                         next(row);
                         grid.delRowData(row);

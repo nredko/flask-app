@@ -65,27 +65,41 @@ def get_list():
 
 @app.route("/read/book/<int:book_id>")
 @restricted
-def read_book(book_id=0):
+def read_book(book_id):
     m.mark_read_book(g.user_id, book_id)
     return jsonify(result='OK '+str(book_id))
 
 
 @app.route("/read/post/<int:book_id>")
 @restricted
-def read_post(book_id=0):
+def read_post(book_id):
     m.mark_read_post(g.user_id, book_id)
+    return jsonify(result='OK '+str(book_id))
+
+
+@app.route("/read/author/<int:book_id>")
+@restricted
+def read_author(book_id):
+    m.mark_read_author(g.user_id, book_id)
     return jsonify(result='OK '+str(book_id))
 
 
 @app.route("/unread/book/<int:book_id>")
 @restricted
-def unread_book(book_id=0):
+def unread_book(book_id):
     m.mark_unread_book(g.user_id, book_id)
     return jsonify(result='OK '+str(book_id))
 
 
 @app.route("/unread/posts/<int:book_id>")
 @restricted
-def unread_posts(book_id=0):
+def unread_posts(book_id):
     m.mark_unread_post(g.user_id, book_id)
+    return jsonify(result='OK '+str(book_id))
+
+
+@app.route("/unread/author/<int:book_id>")
+@restricted
+def unread_author(book_id):
+    m.mark_unread_author(g.user_id, book_id)
     return jsonify(result='OK '+str(book_id))
