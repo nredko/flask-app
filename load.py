@@ -175,6 +175,4 @@ def load():
         pass
 
 db.create_all()
-while True:
-    load()
-    time.sleep(30)
+load()
